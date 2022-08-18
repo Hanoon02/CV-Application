@@ -1,3 +1,3 @@
 # CV-Application
 
-## Empty Repo, will update later
+## Sample webpage to create your own CV. Build using React
