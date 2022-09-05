@@ -1,0 +1,217 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    width: 60vw;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f2f3f3;
+    font-family: "Chakra Petch", sans-serif;
+  }
+  
+  h2 {
+    margin-top: 0px;
+  }
+  
+  p,
+  label {
+    font-size: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    --inputwidth: 379px;
+  }
+  
+  input[type="submit"],
+  button {
+    width: max-content;
+    font-family: Line Awesome Free;
+    border: 1px solid lightgrey;
+    background-color: #ce4741;
+    color: white;
+    height: 35px;
+    width: 35px;
+    box-shadow: 1px 1px 1px lightgrey;
+  }
+  
+  input[type="submit"]:hover,
+  button:hover {
+    background-color: #90312d;
+  }
+  
+  form#submitphotoform {
+    padding: 10px 0px;
+    display: block;
+  }
+  
+  form#submitphotoform > input[type="submit"] {
+    margin-left: 5px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  form > label {
+    width: var(--inputwidth);
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"] {
+    max-width: var(--inputwidth);
+    border: 1px solid grey;
+    height: 30px;
+  }
+  
+  input[type="date"] {
+    margin: 3px 0;
+    border: 1px solid grey;
+    height: 30px;
+    max-width: max-content;
+  }
+  
+  input:focus {
+    border: 1px solid #4c4c4c;
+  }
+  
+  #header {
+    background-color: #d9dcdc;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .rotate {
+    transform: rotate(-90deg);
+    height: max-content;
+    margin-right: -40px;
+  }
+  
+  #logodiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .cvblock {
+    background-color: #ffffff;
+    padding: 20px 20px;
+    border-top: solid #ce4741 3px;
+  }
+  
+  footer {
+    text-align: center;
+    background-color: #d9dcdc;
+    padding: 10px 20px;
+  }
+  
+  /* input:required  */
+  
+  .requiredinput::after {
+    content: "*";
+  }
+  
+  #profilephoto {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+    margin-right: 20px;
+  }
+  
+  #profilephoto > img {
+    max-width: 300px;
+  }
+  
+  #profilephoto > button {
+    width: 35px;
+    height: 35px;
+  }
+  
+  #infosubdiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .subblock {
+    border-left: solid grey 2px;
+    padding-left: 20px;
+    margin-top: 20px;
+  }
+  
+  .hide {
+    display: none;
+  }
+  
+  .blocksubtitle {
+    text-decoration: underline;
+  }
+  
+  #submitbutton {
+    display: block;
+    max-width: max-content;
+    margin: 20px auto;
+    height: 40px;
+  }
+  
+  a {
+    color: #ce4741;
+  }
+  
+  a:hover {
+    color: #90312d;
+  }
+  
+  a:visited {
+    color: #290e0d;
+  }
+  
+  @media (max-width: 1400px) {
+    body {
+      width: 90vw;
+    }
+  }
+  
+  @media (max-width: 1600px) {
+    #infosubdiv {
+      flex-direction: column;
+    }
+    #profilephoto {
+      margin-top: 5px;
+      align-items: flex-start;
+    }
+  }
+  
+  @media (max-width: 413px) {
+    #header {
+      flex-direction: column;
+    }
+  
+    #rotate {
+      margin-right: 5px;
+    }
+  
+    input[type="url"] {
+      width: 255px;
+    }
+  
+    #profilephoto {
+      width: 100%;
+    }
+  
+    form > label {
+      width: 100%;
+    }
+  
+    #profilephoto > img {
+      max-width: 250px;
+    }
+  }

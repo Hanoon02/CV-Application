@@ -1,142 +1,140 @@
-import React from 'react';
-import ExpIndividual from './ExpIndividual';
+import React from "react";
 
-export default class Experience extends React.Component{
-    constructor(props){
-        super(props)
-        this.state ={
-            experience: [{
-                company: 'A good company',
-                position: 'future software engineer',
-                start: '2017-12',
-                end: '2020-12',
-                present: false,
-                responsibilities: 'exampl1'
-            },{
-                company: 'company2',
-                position: 'company2-main',
-                start: '2017-12',
-                end: '2020-12',
-                present: false,
-                responsibilities: 'exampl1'
-            }],
-            addNewExp: false,
-            presentChecked: false
-        };
-        this.handleAddExp = this.handleAddExp.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
-        this.handleAddSubmit = this.handleAddSubmit.bind(this);
-        this.handlePresentClick = this.handlePresentClick.bind(this);
-        this.handleDeleteExp = this.handleDeleteExp.bind(this);
+class Experience extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handlerOfSubmit = this.handlerOfSubmit.bind(this);
+    this.handlerOfChange = this.handlerOfChange.bind(this);
+    this.fillOutForm = this.fillOutForm.bind(this);
+    this.state = {
+      companyname: {
+        title: "Company Name",
+        selected: "",
+        alias: "companyname",
+      },
+      positiontitle: {
+        title: "Position Title",
+        selected: "",
+        alias: "positiontitle",
+      },
+      startdate: { title: "Start Date", selected: "", alias: "startdate" },
+      enddate: { title: "End Date", selected: "", alias: "enddate" },
+      experience: [],
+    };
+  }
+  handlerOfSubmit = function (event) {
+    event.preventDefault();
+    this.setState(
+      {
+        experience: this.state.experience.concat([
+          this.state.companyname,
+          this.state.positiontitle,
+          this.state.startdate,
+          this.state.enddate,
+        ]),
+      },
+      () => {
+        this.props.getText(this.state.experience);
+      }
+    );
+  };
+
+  handlerOfChange = function (event) {
+    const statename = event.target.name;
+    this.setState({
+      [statename]: {
+        title: this.state[statename].title,
+        selected: event.target.value,
+        alias: this.state[statename].alias,
+      },
+    });
+  };
+
+  // on edit
+  fillOutForm = function () {
+    const arrayreceived = this.props.toedit;
+    this.setState({
+      companyname: {
+        title: this.state.companyname.title,
+        selected: arrayreceived[0].selected,
+        alias: this.state.companyname.alias,
+      },
+      positiontitle: {
+        title: this.state.positiontitle.title,
+        selected: arrayreceived[1].selected,
+        alias: this.state.positiontitle.alias,
+      },
+      startdate: {
+        title: this.state.startdate.title,
+        selected: arrayreceived[2].selected,
+        alias: this.state.startdate.alias,
+      },
+      enddate: {
+        title: this.state.enddate.title,
+        selected: arrayreceived[3].selected,
+        alias: this.state.enddate.alias,
+      },
+    });
+  };
+
+  componentDidMount() {
+    const emptyObject = Object.keys(this.props.toedit).length;
+    if (emptyObject !== 0) {
+      this.fillOutForm();
     }
-    // Methods for adding new experience
-    handleAddExp(){
-        this.setState({
-            addNewExp: true
-        })
-    }
+  }
 
-    handlePresentClick(e){
-        const target = e.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        this.setState({
-            presentChecked: value
-        })
-    }
-
-    handleAddSubmit(e){
-        e.preventDefault();
-
-        const end = this.state.presentChecked ? 'Present' : e.target.end.value
-
-        const newExp = {
-            company: e.target.compnay.value.trim(),
-            position: e.target.position.value.trim(),
-            start: e.target.start.value,
-            end: end,
-            present: this.state.presentChecked,
-            responsibilities: e.target.responsibilities.value.trim()
-        }
-
-        this.setState((prevState)=>{
-            return {
-                experience: prevState.experience.concat(newExp),
-                addNewExp: false
-            }
-        })
-    }
-
-    handleCancel(){
-        this.setState((prevState) => {
-            return {
-                experience: prevState.experience,
-                addNewExp: false
-            }
-        })
-    }
-
-    // Methods for each experience
-
-
-    handleDeleteExp(expToRemove){
-        this.setState((prevState)=>{ 
-            return {
-                experience: prevState.experience.filter((_, i) => i !== expToRemove)
-            }})
-    }
-
-
-    render(){
-        const { experience, addNewExp } = this.state;
-
-        const addTemplate = (
-            <div className="exp-add-container">
-                <form onSubmit={this.handleAddSubmit}>
-                    <label htmlFor="position">*Position:</label>
-                    <input type="text" name="position" id="position" required />
-                    <label htmlFor="company">*Company:</label>
-                    <input type="text" name="compnay" id="company" required />
-                    <label htmlFor="start">*Start:</label>
-                    <input type="date" name="start" id="start" required />
-                    <label htmlFor="end">End:</label>
-                    <input type="date" name="end" id="end" disabled={this.state.presentChecked && true} />
-                    <label htmlFor="untilPresent">Present</label>
-                    <input type="checkbox" id="untilPresent" name="present" checked={this.state.presentChecked} onChange={this.handlePresentClick} />
-                    <label htmlFor="responsibilities">Responsibilities:</label>
-                    <textarea name="responsibilities" id="responsibilities" />
-                    <button type="submit" className="btn-submit--right">Add</button>
-                    <button className="btn-submit--right" onClick={this.handleCancel}>Cancel</button>
-                </form>
-            </div>
-        )
-
-        const viewTemplate = (
-            <div className="experience-container">
-                <h3 className="section-container">Experience</h3>
-                <button className="btn edit-right" 
-                    onClick={this.handleAddExp}
-                >+</button>
-                {addNewExp && addTemplate}
-                {
-                    experience.map((exp, index) => (
-                            <ExpIndividual 
-                            key={index}
-                            expIndex={index}
-                            expCompany={exp.company}
-                            expPosition={exp.position}
-                            expStart={exp.start}
-                            expEnd={exp.end}
-                            expPresent={exp.present}
-                            expResp={exp.responsibilities}
-                            handleDeleteExp={this.handleDeleteExp}
-                        />   
-                    ))
-                }
-            </div>
-        )
-
-        return(
-            viewTemplate
-        )
-    }
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.handlerOfSubmit}>
+          <label>{this.state.companyname.title}</label>
+          <input
+            type="text"
+            name="companyname"
+            value={this.state.companyname.selected}
+            onChange={this.handlerOfChange}
+          />
+          <label>{this.state.positiontitle.title}</label>
+          <input
+            type="text"
+            name="positiontitle"
+            value={this.state.positiontitle.selected}
+            onChange={this.handlerOfChange}
+          />
+          <label>{this.state.startdate.title}</label>
+          <input
+            type="date"
+            name="startdate"
+            value={this.state.startdate.selected}
+            onChange={this.handlerOfChange}
+          />
+          <label>{this.state.enddate.title}</label>
+          <input
+            type="date"
+            name="enddate"
+            value={this.state.enddate.selected}
+            onChange={this.handlerOfChange}
+          />
+          <input type="submit" value="&#xf0c7;" title="Save" />
+        </form>
+        <div>
+          <button
+            onClick={this.props.cancelButton}
+            className={this.props.showOrHide}
+            data-buttonname="cancelexperience"
+            title="Cancel"
+          >
+            <i
+              className="las la-times"
+              onClick={this.props.cancelButton}
+              data-buttonname="cancelexperience"
+            ></i>
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
+
+export default Experience;
