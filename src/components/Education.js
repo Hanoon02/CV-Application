@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Education(){
+function Education(props){
     return(
         <>
             <div className='flex flex-col items-center justify-center py-4'>
