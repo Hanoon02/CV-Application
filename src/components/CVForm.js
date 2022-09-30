@@ -5,10 +5,10 @@ import Education from "./Education";
 import FormControls from "./FormControls";
 
 function CVForms(){
-    const {formControls,clear} = FormControls();
+    const {formControls,clear,resetForm} = FormControls();
     return(
         <>
-            <Personal clear = {clear}/>
+            <Personal clear = {clear} resetForm={resetForm}/>
             <Experience clear = {clear}/>
             <Education clear = {clear}/>
             {formControls}
